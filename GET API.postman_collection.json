@@ -1,0 +1,380 @@
+{
+	"info": {
+		"_postman_id": "a7798d53-9976-4be5-8324-ac15e7bca496",
+		"name": "GET API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25638800"
+	},
+	"item": [
+		{
+			"name": "Smoke Testing",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/2",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://regres.in/api/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"    pm.test(\"Status code is 201\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(201);\r",
+									"    pm.expect(pm.response.responseTime).to.below(1000);\r",
+									"    });\r",
+									"\r",
+									"//Body testing\r",
+									"    pm.test(\"Credentials\", () => {\r",
+									"        const datacontent = jsonData;\r",
+									"        pm.expect(datacontent.name).to.eql(\"Tiggy Shukra\");\r",
+									"        pm.expect(datacontent.job).to.eql(\"QA Engineer\");\r",
+									"        });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var name = \"Tiggy Shukra\"\r",
+									"var job = \"QA Engineer\"\r",
+									"console.log(\"Name Changed\"+name);\r",
+									"pm.globals.set(\"name\",name);\r",
+									"pm.globals.set(\"job\",job);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\" : \"{{name}}\",\r\n\"job\" : \"{{job}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Regression Testing",
+			"item": [
+				{
+					"name": "http://reqres.in/api/users?page=2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"    pm.test(\"Data_ID7\", () => {\r",
+									"        const datacontent = jsonData.data[0];\r",
+									"        pm.expect(datacontent.id).to.eql(7);\r",
+									"        pm.expect(datacontent.email).to.eql(\"michael.lawson@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Michael\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Lawson\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/7-image.jpg\");\r",
+									"        });\r",
+									"     pm.test(\"Data_ID8\", () => {\r",
+									"        const datacontent = jsonData.data[1];\r",
+									"        pm.expect(datacontent.id).to.eql(8);\r",
+									"        pm.expect(datacontent.email).to.eql(\"lindsay.ferguson@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Lindsay\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Ferguson\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/8-image.jpg\");\r",
+									"     });\r",
+									"\r",
+									"    pm.test(\"Data_ID9\", () => {\r",
+									"        const datacontent = jsonData.data[2];\r",
+									"        pm.expect(datacontent.id).to.eql(9);\r",
+									"        pm.expect(datacontent.email).to.eql(\"tobias.funke@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Tobias\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Funke\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/9-image.jpg\");\r",
+									"     });\r",
+									"\r",
+									"     pm.test(\"Data_ID10\", () => {\r",
+									"        const datacontent = jsonData.data[3];\r",
+									"        pm.expect(datacontent.id).to.eql(10);\r",
+									"        pm.expect(datacontent.email).to.eql(\"byron.fields@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Byron\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Fields\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/10-image.jpg\");\r",
+									"     });\r",
+									"\r",
+									"      pm.test(\"Data_ID11\", () => {\r",
+									"        const datacontent = jsonData.data[4];\r",
+									"        pm.expect(datacontent.id).to.eql(11);\r",
+									"        pm.expect(datacontent.email).to.eql(\"george.edwards@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"George\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Edwards\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/11-image.jpg\");\r",
+									"     });\r",
+									"     \r",
+									"  \r",
+									"     pm.test(\"Data_ID12\", () => {\r",
+									"        const datacontent = jsonData.data[5];\r",
+									"        pm.expect(datacontent.id).to.eql(12);\r",
+									"        pm.expect(datacontent.email).to.eql(\"rachel.howell@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Rachel\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Howell\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/12-image.jpg\");\r",
+									"     });\r",
+									"\r",
+									"    pm.test(\"Support Testing\", () => {\r",
+									"        const datacontent = jsonData.support;\r",
+									"        pm.expect(datacontent.url).to.eql(\"https://reqres.in/#support-heading\");\r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://reqres.in/api/users/2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"    pm.test(\"Status code is 200\", () => {\r",
+									"    pm.expect(pm.response.code).to.eql(200);\r",
+									"    pm.expect(pm.response.responseTime).to.below(100);\r",
+									"    });\r",
+									"\r",
+									"     //header testing\r",
+									"     pm.test(\"Header Testing\", () => {\r",
+									"     pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"     pm.expect(pm.response.headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+									"     pm.expect(pm.response.headers.get('Connection')).to.eql('keep-alive');\r",
+									"     pm.expect(pm.response.headers.get('X-Powered-By')).to.eql('Express');\r",
+									"     pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql('*');\r",
+									"     pm.expect(pm.response.headers.get('Etag')).to.eql('W/\"118-pbdwwFo9SKNhD3Lx5iHJyngpq00\"');\r",
+									"        });\r",
+									"    \r",
+									"    \r",
+									"    pm.test(\"Data_ID2\", () => {\r",
+									"        const datacontent = jsonData.data;\r",
+									"        pm.expect(datacontent.id).to.eql(2);\r",
+									"        pm.expect(datacontent.email).to.eql(\"janet.weaver@reqres.in\");\r",
+									"        pm.expect(datacontent.first_name).to.eql(\"Janet\");\r",
+									"        pm.expect(datacontent.last_name).to.eql(\"Weaver\");\r",
+									"        pm.expect(datacontent.avatar).to.eql(\"https://reqres.in/img/faces/2-image.jpg\");\r",
+									"        });\r",
+									"    pm.test(\"Support Testing\", () => {\r",
+									"        const datacontent = jsonData.support;\r",
+									"        pm.expect(datacontent.url).to.eql(\"https://reqres.in/#support-heading\");\r",
+									"        pm.expect(datacontent.text).to.eql(\"To keep ReqRes free, contributions towards server costs are appreciated!\");\r",
+									"     });\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"JSON Test\", function(){\r",
+									"    pm.expect(jsonData.page).to.equal(1);\r",
+									"    pm.expect(jsonData.per_page).to.equal(6);\r",
+									"    pm.expect(jsonData.total).to.equal(12);\r",
+									"    pm.expect(jsonData.total_pages).to.equal(2);\r",
+									"});\r",
+									"pm.test(\"Data ID1\", function () {\r",
+									"        pm.expect(jsonData.data[0].id).to.eql(1);\r",
+									"        pm.expect(jsonData.data[0].name).to.eql(\"cerulean\");\r",
+									"        pm.expect(jsonData.data[0].year).to.eql(2000);\r",
+									"        pm.expect(jsonData.data[0].color).to.eql(\"#98B2D1\");\r",
+									"        pm.expect(jsonData.data[0].pantone_value).to.eql(\"15-4020\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/unknown",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"unknown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Snipet testing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"        pm.expect(jsonData.data[0].id).to.eql(7);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.log(\"Running the testing\")"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
